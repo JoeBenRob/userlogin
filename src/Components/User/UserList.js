@@ -25,7 +25,7 @@ function UserList(props) {
                 </tbody>
             </Table>
         </div >
-    );
+    )
 }
 
 export default UserList;

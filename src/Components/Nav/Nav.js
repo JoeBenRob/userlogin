@@ -9,40 +9,49 @@ import Log from '../Log';
 
 class Nav extends Component {
 
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
-            data: []
-
+            data: [],
+            log: false
         };
-    }
+    };
 
     getData = () => {
         axios.get("http://localhost:5000/user/all").then(response => {
             this.setState({
                 data: response.data
-            })
-        })
-    }
+            });
+        });
+    };
 
     componentDidMount() {
         this.getData();
-    }
+    };
+
+    changeLog = () => {
+        this.setState({
+            log: true,
+        });
+    };
 
     render() {
         return (
             <div >
                 <Router >
                     <div>
-                        <Log getData={this.getData} />
-                        <ul>
-                            <button><Link to="/UserForm">User Creation</Link></button>
-                            <button><Link to="/UserList">User List</Link></button>
-                        </ul>
-                        <Route path="/UserList" render={() => <UserList getData={this.getData} data={this.state.data} />} />
                         <div>
+                            <Log getData={this.getData} log={this.changeLog} />
+                            <ul>
+                                <button><Link to="/UserForm">User Creation</Link></button>
+                                <button><Link to="/UserList">User List</Link></button>
+                            </ul>
+                        </div>
+                        <div>
+                            <Route path="/UserList" render={() => <UserList getData={this.getData} data={this.state.data} />} />
+
                             <Route exact path="/UserForm" render={(props) =>
-                                <UserForm getData={this.getData} />} />
+                                <UserForm getData={this.getData} log={this.state.log} />} />
 
                             {this.state.data.map((item, index) => (
                                 <div key={index}>
@@ -57,7 +66,7 @@ class Nav extends Component {
                     </div>
                 </Router>
             </div >
-        )
-    }
-}
+        );
+    };
+};
 export default Nav;

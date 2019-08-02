@@ -17,20 +17,22 @@ class Log extends Component {
         this.setState({ error: "" })
         let post = {
             username: event.target[0].value,
-            password: event.target[2].value,
+            password: event.target[1].value,
         };
-
         if (post.username === "" || post.password === "") {
-            this.setState({ error: "username doesn't exist" })
+            this.setState({ error: "Empty fields" })
         }
-        axios.get("http://localhost:5000/user/name/" + event.target[0].value + "/" + event.target[1].value)
-            .then(res => {
-                console.log(res.data.Status)
-                if (res.data.Status === "Logged In")
-                    this.setState({ message: "Signed in as: " + post.username })
-                else
-                    this.setState({ error: "Incorrect details" })
-            })
+        else {
+            axios.get("http://localhost:5000/user/name/" + post.username + "/" + post.password)
+                .then(res => {
+                    if (res.data.Status === "Logged In") {
+                        this.setState({ message: "Signed in as: " + post.username });
+                        this.props.log();
+                    }
+                    else
+                        this.setState({ error: "Incorrect details" })
+                })
+        }
     }
 
     render() {
