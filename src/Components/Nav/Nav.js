@@ -13,7 +13,6 @@ class Nav extends Component {
         super();
         this.state = {
             data: [],
-            log: false
         };
     };
 
@@ -29,19 +28,13 @@ class Nav extends Component {
         this.getData();
     };
 
-    changeLog = () => {
-        this.setState({
-            log: true,
-        });
-    };
-
     render() {
         return (
             <div >
                 <Router >
                     <div>
                         <div>
-                            <Log getData={this.getData} log={this.changeLog} />
+                            <Log getData={this.getData} />
                             <ul>
                                 <button><Link to="/UserForm">User Creation</Link></button>
                                 <button><Link to="/UserList">User List</Link></button>
@@ -51,7 +44,7 @@ class Nav extends Component {
                             <Route path="/UserList" render={() => <UserList getData={this.getData} data={this.state.data} />} />
 
                             <Route exact path="/UserForm" render={(props) =>
-                                <UserForm getData={this.getData} log={this.state.log} />} />
+                                <UserForm getData={this.getData} />} />
 
                             {this.state.data.map((item, index) => (
                                 <div key={index}>
