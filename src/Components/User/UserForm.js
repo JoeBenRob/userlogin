@@ -19,37 +19,35 @@ class UserForm extends Component {
         event.preventDefault();
         this.setState({ message: "" });
         this.setState({ error: "" });
-        if (this.props.log === true) {
-            let post = {
-                username: event.target[0].value,
-                email: event.target[1].value,
-                password: event.target[2].value,
-                password2: event.target[3].value,
-            };
 
-            if (post.username === "" || post.email === "" || post.password === "" || post.password2 === "") {
-                this.setState({ error: "Ensure you have filled the fields out correctly" })
-            } else {
+        let post = {
+            username: event.target[0].value,
+            email: event.target[1].value,
+            password: event.target[2].value,
+            password2: event.target[3].value,
+        };
 
-                axios.post(`http://localhost:5000/user/createUser`, post)
-                    .then(res => {
-                        if (res.data.password === "Password field is required" || res.data.password === "Passwords do not match") {
-                            this.setState({ error: res.data.password })
-                        }
-                        else if (res.data.email === "Email field is required" || res.data.email === "Email is invalid") {
-                            this.setState({ error: res.data.email })
-                        }
-                        else if (res.data.username === "Username field is required") {
-                            this.setState({ error: res.data.username })
-                        }
-                        else {
-                            this.setState({ message: "User '" + res.data.username + "' created" });
-                        }
-                        this.props.getData();
-                    })
-            }
-        } else { this.setState({ error: "you must be logged in to create a user" }) }
+        if (post.username === "" || post.email === "" || post.password === "" || post.password2 === "") {
+            this.setState({ error: "Ensure you have filled the fields out correctly" })
+        } else {
 
+            axios.post(`http://localhost:5000/user/createUser`, post)
+                .then(res => {
+                    if (res.data.password === "Password field is required" || res.data.password === "Passwords do not match") {
+                        this.setState({ error: res.data.password })
+                    }
+                    else if (res.data.email === "Email field is required" || res.data.email === "Email is invalid") {
+                        this.setState({ error: res.data.email })
+                    }
+                    else if (res.data.username === "Username field is required") {
+                        this.setState({ error: res.data.username })
+                    }
+                    else {
+                        this.setState({ message: "User '" + res.data.username + "' created" });
+                    }
+                    this.props.getData();
+                })
+        }
     }
 
     render() {
