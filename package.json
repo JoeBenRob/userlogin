@@ -16,7 +16,7 @@
     "react-scripts": "3.0.1",
     "react-test-renderer": "^16.8.6",
     "reactstrap": "^8.0.1",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
